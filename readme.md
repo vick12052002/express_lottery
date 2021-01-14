@@ -1,4 +1,6 @@
 ## 抽獎 API 
+以 node.js 與 express 建立抽獎API
+
 BASE_URL : lottery.alirong.tw
 
 功能     |Method | path
