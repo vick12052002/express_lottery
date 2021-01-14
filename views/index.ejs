@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>抽獎拉</title>
+  <link type="text/css" rel="stylesheet" href="/public/css/reset.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+    integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="/public/css/style.css">
+</head>
+<body>
+  <div class="price_area">
+  </div>
+  <div class="btn_group m-2">
+    <button type="button" class="btn btn-outline-primary lottery_btn" href="/get-lottery">我要抽獎</button>
+    <% if (username){ %>
+    <a class="btn btn-outline-info setup_btn">設定獎項</a>
+    <a class="btn btn-outline-success logout_btn" href="/logout">登出</a>
+    <% }else {%>
+    <button type="button" class="btn btn-outline-success login_btn">Login</button>
+    <% }%>
+  </div>
+  <div class="login_form ">
+    <h3><%= errorMessage %></h3>
+    <form method="POST" action="/login">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" class="form-control" name="username">
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" name="password">
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+  <div class="system_area ">
+    <table class="table">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">id</th>
+          <th scope="col">獎項名稱</th>
+          <th scope="col">獎品敘述</th>
+          <th scope="col">縮圖網址</th>
+          <th scope="col">權重</th>
+          <th scope="col">動作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if(prices){
+          prices.forEach(price => { %>
+        <tr>
+          <form action="/system/update/<%= price.id%>" method="POST">
+            <th scope="row"><%= price.id %></th>
+            <td><input class="form-control" type="text" name="name" value="<%= price.name %>"></td>
+            <td><input class="form-control" type="text" name="description" value="<%= price.description %>"></td>
+            <td><input class="form-control" type="text" name="img" value="<%= price.img_url %>"></td>
+            <td><input class="form-control" type="text" name="weight" value="<%= price.weight %>"></td>
+            <td class="d-flex">
+              <a class="btn btn-outline-danger delete_btn" href="/system/delete/<%= price.id %>">刪除</a>
+              <button type="submit" class="btn btn-outline-dark update_btn">儲存</button>
+            </td>
+          </form>
+        </tr>
+        <% })} %>
+      </tbody>
+    </table>
+
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">獎項名稱</th>
+          <th scope="col">獎品敘述</th>
+          <th scope="col">縮圖網址</th>
+          <th scope="col">權重 weight</th>
+          <th scope="col">儲存</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <form action="/system/add" method="POST">
+            <td><input class="form-control" type="text" name="name" placeholder="請輸入獎項名稱"></td>
+            <td><input class="form-control" type="text" name="description" placeholder="請輸入敘述"></td>
+            <td><input class="form-control" type="text" name="img" placeholder="請輸入縮圖網址"></td>
+            <td><input class="form-control" type="text" name="weight" placeholder="請輸入權重"></td>
+            <td><input class="form-control" type="submit" value="新增"> </td>
+          </form>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+<script src="/public/getLottery.js"></script>
+
+</html>
