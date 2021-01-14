@@ -5,6 +5,7 @@ const session = require('express-session');
 const bodyParser = require('body-parser');
 const flash = require('connect-flash');
 const path = require('path');
+const cors = require('cors')
 const lotteryController = require('./controllers/lottery');
 
 const app = express();
@@ -16,6 +17,7 @@ app.use('/public', express.static('public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(flash());
+app.use(cors())
 
 app.use(session({
   secret: process.env.TEST,
