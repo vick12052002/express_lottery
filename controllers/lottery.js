@@ -133,10 +133,12 @@ const lotteryController = {
         res.json(prices);
       });
     } else {
-      res.json({
-        success:false,
-        message:'使用者並無權限'
+      Lottery.findAll({
+        attributes: ['name', 'description','img_url']
+      }).then((prices) => {
+        res.json(prices);
       });
+
     }
   },
 };
